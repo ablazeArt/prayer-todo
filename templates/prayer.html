@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- http://getbootstrap.com/docs/5.1/ -->
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" rel="stylesheet">
+    <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"></script>
+
+    <!-- google font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+    <link href="/static/styles.css" rel="stylesheet">
+
+    <title>PrayerTodo: Home</title>
+    
+</head>
+<body onload=display_time();>
+     <nav class="navbar navbar-expand-md navbar-dark">
+            <div class="container-fluid navbar-top">
+                <a class="navbar-brand" href="/"><span class="blue">Prayer</span><span class="red">Todo</span></a>
+                <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbar">
+                    {% if session["user_id"] %}
+                        <ul class="navbar-nav me-auto mt-2">
+                            <li class="nav-item"><a class="nav-link menu" href="#prayer">Prayer Times</a></li>
+                            <li class="nav-item"><a class="nav-link menu" href="#time">Timer</a></li>
+                            <li class="nav-item"><a class="nav-link menu" href="/todo">Todo List</a></li>
+                        </ul>
+                        <ul class="navbar-nav ms-auto mt-2">
+                            <li class="nav-item"><a class="nav-link menu-logout" href="/logout">Log Out</a></li>
+                        </ul>
+                    {% else %}
+                        <ul class="navbar-nav me-auto mt-2">
+                            <li class="nav-item"><a class="nav-link menu" href="#prayer">Prayer Times</a></li>
+                            <li class="nav-item"><a class="nav-link menu" href="#time">Timer</a></li>
+                            <li class="nav-item"><a class="nav-link menu" href="/todo">Todo List</a></li>
+                        </ul>
+                        <ul class="navbar-nav ms-auto mt-2">
+                            <li class="nav-item"><a class="nav-link menu" href="/register">Register</a></li>
+                            <li class="nav-item"><a class="nav-link menu" href="/login">Log In</a></li>
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+
+        <main class="container-fluid py-5 text-center" id="top">
+            <div class="section">
+
+                <div id="prayer" class="prayer-section">
+    
+                    <h2>Prayer time {{data["city"]}} {{data['date']}}</h2>
+                    
+                    <table>
+                        <tbody>
+                            <!-- TODO: Loop through the database entries to display them in this table -->
+                            {% for prayer in data['today'] %}
+                                <tr>
+                                    <th>{{prayer}}</th>
+                                    <th>{{data['today'][prayer]}}</th>
+                                </tr>
+                            {% endfor %}
+    
+                        </tbody>
+                    </table>
+                </div>
+    
+                <!-- Show current time -->
+                <h1 id="time"></h1>
+    
+                <div id="time" class="timer">
+    
+                    <div class="timer_time">
+                        <h1>Work</h1>
+                        <div class="label-section">
+                            <p id="hour-label" class="label">Hours</p><p id="min-label" class="label">Minutes</p><p id="sec-label" class="label">Seconds</p>
+                        </div>
+                        <input id="hour" type="number" max="99" min="0" value="0" class="timer__part timer__part--minutes">
+                        <span class="timer__part">:</span>
+                        <input id="minute" type="number" max="60" min="0" step="10" value="0" class="timer__part timer__part--seconds">
+                        <span class="timer__part">:</span>
+                        <input id="sec" type="number" max="60" min="0" step="10" value="0" class="timer__part timer__part--seconds">
+                    </div>
+    
+                    <div class="timer_time">
+                        <h1>Break</h1>
+                        <div class="label-section">
+                            <p id="hour-label" class="label">Hours</p><p id="min-label" class="label">Minutes</p><p id="sec-label" class="label">Seconds</p>
+                        </div>
+                        <input id="hour_b" type="number" max="99" min="0" value="0" class="timer__part timer__part--minutes">
+                        <span class="timer__part">:</span>
+                        <input id="minute_b" type="number" max="60" min="0" step="10" value="0" class="timer__part timer__part--seconds">
+                        <span class="timer__part">:</span>
+                        <input id="sec_b" type="number" max="60" min="0" step="10" value="0" class="timer__part timer__part--seconds">
+                    </div>
+                    <div>
+                        <button id="control" type="button" class="timer__btn timer__btn--control timer__btn--start">
+                            <span >Start</span>
+                        </button>
+                        <button id="reset" type="button" class="timer__btn timer__btn--reset">
+                            <span >Reset</span>
+                        </button>
+                    </div>
+                </div>
+    
+                <audio id="audio" src="{{ url_for('static', filename='alarm.mp3') }}"></audio>
+    
+            <script type="text/javascript" src="{{ url_for('static', filename='main.js') }}"></script>
+        </main>
+
+        <footer class="mb-5 small text-center text-muted">
+            <p>Data provided by <a href="https://www.muslimpro.com/">Muslim Pro</a></p>
+            <p> Made by Ablaze</p>
+        </footer>
+        
+</html>
