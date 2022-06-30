@@ -159,7 +159,7 @@ button {
   }
 
   input[type=number] {
-    max-width: 150px;
+    width: 150px;
     background-color: #1B1A17;
   }
 
