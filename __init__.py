@@ -1,3 +1,6 @@
+def getApp():
+    return app
+
 import os
 import json
 import requests
@@ -24,9 +27,6 @@ Session(app)
 
 # Configure CS50 libary to use SQLite database
 db = SQL("sqlite:///todo.db")
-
-def getApp():
-    return app
 
 @app.after_request
 def after_request(response):
