@@ -1,1 +1,1 @@
-web: gunicorn wsgi:prayer-todo
+web: gunicorn wsgi:app
