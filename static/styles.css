@@ -159,7 +159,7 @@ button {
   }
 
   input[type=number] {
-    max-width: 100px;
+    max-width: 150px;
     background-color: #1B1A17;
   }
 
@@ -268,10 +268,6 @@ tbody tr:nth-of-type(odd) {
   #todo-list-section {
     min-height: 300px;
     max-width: 300px;
-    min-width: 100px;
-  }
-  
-  input[type=number] {
     min-width: 100px;
   }
   
