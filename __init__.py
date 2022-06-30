@@ -26,7 +26,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 libary to use SQLite database
-db = os.environ.get('DATABASE_URL')
+db = SQL("sqlite:///todo.db")
 
 @app.after_request
 def after_request(response):
