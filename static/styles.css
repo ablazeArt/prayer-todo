@@ -272,7 +272,7 @@ tbody tr:nth-of-type(odd) {
   }
 
   input[type=number] {
-    max-width: 70px;
+    max-width: 100px;
   }
   
 }
