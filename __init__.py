@@ -27,7 +27,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 libary to use SQLite database
-db = os.environ.get('DATEBASE_URL')
+db = SQL("sqlite:///todo.db")
 
 # Set time
 time_today = dt.datetime.now()
