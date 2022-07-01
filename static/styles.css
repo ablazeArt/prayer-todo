@@ -140,6 +140,18 @@ button {
   button span:hover {
     background: #3d96df;
   }
+
+ .sound__btn {
+    margin-top: .5rem;
+  }
+
+  .sound__btn span {
+    background-color: #3d96df;
+  }
+
+  .sound__btn span:hover {
+    background-color: #5aa6e4;
+  }
   
   button.last {
     background-color: #ccc9ca;
