@@ -30,9 +30,6 @@ start.addEventListener('click', function(){
     //initialize the variable
     if (statusTimer === false) {
         startTime();
-        setTimeout(function(){
-            play();
-        }, 10000);
     } else {
         stopTime();
     }
