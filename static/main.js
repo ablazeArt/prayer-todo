@@ -66,7 +66,7 @@ function timer(){
     }
     
     //Stop Timer if user didn't fill Break input
-    if (h.value == 0 && m.value == 0 && s.value == 0 && h.value == 0 && m.value == 0 && s.value == 0) {
+    if (h.value == 0 && m.value == 0 && s.value == 0 && h_b.value == 0 && m_b.value == 0 && s_b.value == 0) {
         stopTime();
     }
 
