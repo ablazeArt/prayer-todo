@@ -30,6 +30,9 @@ start.addEventListener('click', function(){
     //initialize the variable
     if (statusTimer === false) {
         startTime();
+        setTimeout(function(){
+            play();
+        }, 10000);
     } else {
         stopTime();
     }
@@ -93,8 +96,7 @@ function timer(){
 }
 
 trig.addEventListener('click', function(){
-    var audio = document.getElementById("audio");
-    audio.play();
+    play();
 })
 
 
@@ -117,4 +119,9 @@ function stopTime() {
     statusTimer = false
     clearInterval(startTimer);
 }
+
+function play() {
+    var audio = document.getElementById("audio");
+    audio.play();
+  }
 
