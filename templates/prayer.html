@@ -56,19 +56,35 @@
     
                     <h2>Prayer time {{data["city"]}} {{data['date']}}</h2>
                     
-                    <table>
-                        <tbody>
-                            <!-- TODO: Loop through the database entries to display them in this table -->
-                            {% for prayer in data['today'] %}
-                                <tr>
-                                    <th>{{prayer}}</th>
-                                    <th>{{data['today'][prayer]}}</th>
-                                </tr>
-                            {% endfor %}
-    
-                        </tbody>
-                    </table>
-                </div>
+                {% if (hour_time >= 0) and (hour_time < 7) %}  
+                        <table>
+                            <tbody>
+                                <!-- TODO: Loop through the database entries to display them in this table -->
+                                {% for prayer in data['tomorrow'] %}
+                                    <tr>
+                                        <th>{{prayer}}</th>
+                                        <th>{{data['today'][prayer]}}</th>
+                                    </tr>
+                                {% endfor %}
+        
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                        <table>
+                            <tbody>
+                                <!-- TODO: Loop through the database entries to display them in this table -->
+                                {% for prayer in data['today'] %}
+                                    <tr>
+                                        <th>{{prayer}}</th>
+                                        <th>{{data['today'][prayer]}}</th>
+                                    </tr>
+                                {% endfor %}
+        
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
     
                 <!-- Show current time -->
                 <h1 id="time"></h1>
