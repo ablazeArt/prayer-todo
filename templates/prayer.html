@@ -105,10 +105,12 @@
                         <button id="reset" type="button" class="timer__btn timer__btn--reset">
                             <span >Reset</span>
                         </button>
+                        <button id="triggerAudio" class="sound__btn">
+                            <span>Enable Sound</span>
+                        </button>
                     </div>
                 </div>
                 
-                <button id="triggerAudio">asdasd</button>
                 <audio id="audio" src="{{ url_for('static', filename='alarm.mp3') }}"></audio>
     
             <script type="text/javascript" src="{{ url_for('static', filename='main.js') }}"></script>
