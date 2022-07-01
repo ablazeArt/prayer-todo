@@ -21,7 +21,6 @@ var s = document.getElementById("sec");
 var h_b = document.getElementById("hour_b");
 var m_b = document.getElementById("minute_b");
 var s_b = document.getElementById("sec_b");
-var trig = document.getElementById("triggerAudio");
 
 //store a reference to the startTimer variable
 var startTimer = null;
@@ -30,6 +29,7 @@ start.addEventListener('click', function(){
     //initialize the variable
     if (statusTimer === false) {
         startTime();
+        tstart();
     } else {
         stopTime();
     }
@@ -54,7 +54,7 @@ function timer(){
         s.value = 0;
     } else if(h.value == 0 && m.value == 0 && s.value == 1){
         s.value--;
-        trig.click();
+        play();
     } else if(s.value != 0){
         s.value--;
     } else if(m.value != 0 && s.value == 0){
@@ -78,7 +78,7 @@ function timer(){
             s_b.value = 0;
         } else if(h_b.value == 0 && m_b.value == 0 && s_b.value == 1){
             s_b.value--;
-            trig.click();
+            play();
             stopTime();
         } else if(s_b.value != 0){
             s_b.value--;
@@ -91,10 +91,6 @@ function timer(){
         }
     } 
 }
-
-trig.addEventListener('click', function(){
-    play();
-})
 
 
 function startTime(){
@@ -122,3 +118,7 @@ function play() {
     audio.play();
   }
 
+  function tstart() {
+    var audioStart = document.getElementById("tstart");
+    audioStart.play();
+  }
