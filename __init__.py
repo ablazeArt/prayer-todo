@@ -4,6 +4,7 @@ def getApp():
 import os
 import json
 import requests
+import datetime as dt
 
 from cs50 import SQL
 from tempfile import mkdtemp
@@ -28,6 +29,10 @@ Session(app)
 # Configure CS50 libary to use SQLite database
 db = SQL("sqlite:///todo.db")
 
+# Set time
+time_today = dt.datetime.now()
+hour_time = dt.datetime.now().hour
+
 @app.after_request
 def after_request(response):
     """Ensure responses aren't cached"""
@@ -43,7 +48,7 @@ def index():
     response = requests.get(url)
     DATA = response.json()
     #Send TODO data that user type in to index.html
-    return render_template("prayer.html", data = DATA)
+    return render_template("prayer.html", data = DATA, hour_time = hour_time, time_today = time_today)
 
 
 @app.route ("/todo", methods=["GET", "POST"])
