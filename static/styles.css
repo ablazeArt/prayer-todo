@@ -281,6 +281,11 @@ tbody tr:nth-of-type(odd) {
     max-width: 300px;
     min-width: 100px;
   }
+  
+  input[type=number] {
+    width: 50px;
+    background-color: #1B1A17;
+  }
 
   
 }
