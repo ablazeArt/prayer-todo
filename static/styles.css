@@ -1,292 +1,125 @@
-*{
-  font-family: 'Roboto', sans-serif;
-  margin:0; padding:0;
-  box-sizing: border-box;
-  outline: none; border: none;
-  text-decoration: none;
-  transition: all .1s linear;
-  line-height:1.5;
-  color: white;
+function display() {
+    var refresh = 1000;
+    myTime = setTimeout('display_time()',refresh);
 }
-
-.border {
-  color: #4aae71 !important;
-}
-
-body {
-  background-color: #1B1A17;
-}
-
-h1 {
-  font-size: 2rem;
-}
-
-nav {
-  background-color: #383638 !important;
-  border-style: ridge;
-  border-width: thin;
-  border-left: none;
-  border-right: none;
-  border-color: #555355;
+       
+function display_time() {
+    const d = new Date();
+    let text = d.toLocaleTimeString('en-US', {hour12: false});
+    document.getElementById("time").innerHTML = text;
+    display();
 }
 
 
-/* Size for brand */
-nav .navbar-brand
-{
-    font-size: xx-large;
+var start = document.getElementById('control');
+var reset = document.getElementById('reset');
+
+var h = document.getElementById("hour");
+var m = document.getElementById("minute");
+var s = document.getElementById("sec");
+
+var h_b = document.getElementById("hour_b");
+var m_b = document.getElementById("minute_b");
+var s_b = document.getElementById("sec_b");
+var trig = document.getElementById("triggerAudio");
+
+var audio = document.getElementById("audio");
+
+//store a reference to the startTimer variable
+var startTimer = null;
+var statusTimer = false;
+start.addEventListener('click', function(){
+    //initialize the variable
+    if (statusTimer === false) {
+        startTime();
+    } else {
+        stopTime();
+    }
+})
+
+reset.addEventListener('click', function(){
+    h.value = 0;
+    m.value = 0;
+    s.value = 0;
+
+    h_b.value = 0;
+    m_b.value = 0;
+    s_b.value = 0;
+    //stop the timer after pressing "reset"
+    stopTime()
+})
+
+function timer(){
+    if(h.value == 0 && m.value == 0 && s.value == 0){
+        h.value = 0;
+        m.value = 0;
+        s.value = 0;
+    } else if(h.value == 0 && m.value == 0 && s.value == 1){
+        s.value--;
+        trig.click();
+    } else if(s.value != 0){
+        s.value--;
+    } else if(m.value != 0 && s.value == 0){
+        s.value = 59;
+        m.value--;
+    } else if(h.value != 0 && m.value == 0){
+        m.value = 60;
+        h.value--;
+    }
+    
+    //Stop Timer if user didn't fill Break input
+    if (h.value == 0 && m.value == 0 && s.value == 0 && h_b.value == 0 && m_b.value == 0 && s_b.value == 0) {
+        stopTime();
+    }
+
+     //Break Timer Countdown
+    if (h.value == 0 && m.value == 0 && s.value == 0){
+        if(h_b.value == 0 && m_b.value == 0 && s_b.value == 0){
+            h_b.value = 0;
+            m_b.value = 0;
+            s_b.value = 0;
+        } else if(h_b.value == 0 && m_b.value == 0 && s_b.value == 1){
+            s_b.value--;
+            trig.click();
+            stopTime();
+        } else if(s_b.value != 0){
+            s_b.value--;
+        } else if(m_b.value != 0 && s_b.value == 0){
+            s_b.value = 59;
+            m_b.value--;
+        } else if(h_b.value != 0 && m_b.value == 0){
+            m_b.value = 60;
+            h_b.value--;
+        }
+    } 
 }
 
-/* Colors for brand */
-nav .navbar-brand .blue
-{
-    color: #537fbe;
-}
-nav .navbar-brand .red
-{
-    color: #ea433b;
-}
-
-.navbar-top {
-  background-color: #383638;
-  border: 3px;
-}
+trig.addEventListener('click', function(){
+    play();
+})
 
 
-.menu:hover {
-    transform: rotate(2deg);
-    padding: 0.2rem 1.2rem;
-    border-radius: 20% 5% 20% 5%/5% 20% 25% 20%;
-    background-color: #3d96df;
-    font-size: 1rem;
+function startTime(){
+    control.innerHTML = '<span>Pause</span>'
+    control.classList.add("timer__btn--stop")
+    control.classList.remove("timer__btn--start")
+    statusTimer = true 
+    startTimer = setInterval(function() {
+        timer();
+    }, 1000);
 }
 
-.menu-logout:hover {
-    transform: rotate(2deg);
-    padding: 0.2rem 1.2rem;
-    border-radius: 20% 5% 20% 5%/5% 20% 25% 20%;
-    background-color: #df3d4b;
-    font-size: 1rem;
+//stop the function after pressing the reset button, 
+//so the time wont go down when selecting a new time after pressing reset
+function stopTime() {
+    control.innerHTML = '<span>Start</span>'
+    control.classList.add("timer__btn--start")
+    control.classList.remove("timer__btn--stop")
+    statusTimer = false
+    clearInterval(startTimer);
 }
 
-.padding-0 {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.timer {
-  margin-top: 4rem;
-  margin-bottom: 7rem;
-}
-
-.timer_time {
-  display: inline-block;
-  border-style: ridge;
-  border-color: #ccc9ca;
-  border-width: thin;
-  margin: 1rem;
-}
-
-.timer__part {
-  font-size: 3.5rem;
-  margin-left: 2px;
-}
-
-.timer__btn--reset span{
-  background-color: #FF8C00;
-}
-
-.timer__btn--reset span:hover{
-  background-color: #FFA500;
-}
-
-.timer__btn--start span{
-  background-color: #4aae71;
-}
-
-.timer__btn--start span:hover{
-  background-color: #5dad7c;
-}
-
-.timer__btn--stop span{
-  background-color: #EF6262;
-}
-
-.timer__btn--stop span:hover{
-  background-color: #f07a7a;
-}
-
-button.last:hover {
-    background-color: #3d96df;
-}
-button {
-    padding: 0;
-    border: none;
-    font-family: "Architects Daughter", cursive;
-    text-decoration: none;
-    padding-bottom: 3px;
-    border-radius: 5px;
-    background-color: #1B1A17;
+function play() {
+    audio.play();
   }
-  button span {
-    background: #f1f5f8;
-    display: block;
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    border: 2px solid hsl(198, 1%, 29%);
-    color: #1B1A17;
-  }
-
-  button span:hover {
-    background: #3d96df;
-  }
-
- .sound__btn {
-    margin-top: .5rem;
-  }
-
-  .sound__btn span {
-    background-color: #3d96df;
-  }
-
-  .sound__btn span:hover {
-    background-color: #5aa6e4;
-  }
-  
-  button.last {
-    background-color: #ccc9ca;
-  }
-
-  .todo_items {
-    text-align: center;
-    display: flex;
-  }
-
-  li {
-    list-style-type: none;
-    text-align: left;
-    position: relative;
-    padding: 0.5rem;
-  }
-
-  input[type=number] {
-    width: 100px;
-    background-color: #1B1A17;
-  }
-
-  .label {
-    display: inline-block;
-    font-size: 1.5rem;
-    margin-left: 1.5rem;
-    margin-right: 1.5rem;
-    margin-bottom: 0;
-  }
-
-  .form input {
-    box-sizing: border-box;
-    background-color: transparent;
-    padding: 0.7rem;
-    border-bottom-right-radius: 15px 3px;
-    border-bottom-left-radius: 3px 15px;
-    border: solid 3px transparent;
-    border-bottom: dashed 3px #ff96ad;
-    font-family: "Architects Daughter", cursive;
-    font-size: 1rem;
-    color: hsla(260, 2%, 25%, 0.7);
-    width: 70%;
-    margin-bottom: 20px;
-  }
-
-  #todo-list-section {
-    margin-top: 3rem;
-    display: inline-block;
-    width: 100%;
-    height: auto;
-    min-height: 500px;
-    max-width: 500px;
-    min-width: 250px;
-    background: #383638;
-    background-size: 25px 25px;
-    border-radius: 20px;
-    box-shadow: 4px 3px 7px 2px #00000040;
-    padding: 1rem;
-    box-sizing: border-box;
-  }
-
-  .heading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1rem;
-  }
-  .heading h1 {
-    transform: rotate(2deg);
-    padding: 0.2rem 1.2rem;
-    border-radius: 20% 5% 20% 5%/5% 20% 25% 20%;
-    background-color: #3d96df;
-    font-size: 1.5rem;
-  }
-  
-.todo_items {
-  color: rgb(69, 85, 177);
-  box-sizing: border-box;
-  background: #e6e8e9;
-  background-size: 25px 25px;
-  box-shadow: 4px 3px 7px 2px #00000040;
-  margin-bottom: 0.5rem;
-  font-family: "Architects Daughter", cursive;
-}
-
-.items {
-  color: #1B1A17;
-}
-
-table {
-  background-color: transparent;
-  margin-bottom: 1rem;
-  width: 100%;
-}
-
-table th,
-table td {
-  padding: 0.75rem;
-  vertical-align: middle;
-}
-
-tbody tr:nth-of-type(odd) {
-  background-color: rgba(186, 199, 198, 0.3)
-}
-
-.prayer-section {
-  display: inline-block;
-}
-
-#audio {
-  display: none;
-}
-
-
-@media (max-width:800px) {
-
-  html{
-      font-size: 55%;
-  }
-
-  body{
-      padding: 0;
-  }
-
-  #todo-list-section {
-    min-height: 300px;
-    max-width: 300px;
-    min-width: 100px;
-  }
-  
-  input[type=number] {
-    width: 70px;
-  }
-  
-}
-
-
 
